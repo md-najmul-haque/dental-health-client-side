@@ -30,11 +30,12 @@ const Header = () => {
                         <Nav.Link href="home#testimonials">Testimonials</Nav.Link>
                     </Nav>
                     <Nav>
-                        <Nav.Link href="home#about">About</Nav.Link>
+                        <Nav.Link eventKey={2} as={Link} to="/about">About</Nav.Link>
                         {
-                            user ? <Button className='text-decoration-none text-dark' onClick={handleSignOut} variant='link'>Sing Out</Button> : <Nav.Link eventKey={2} as={Link} to="/login">
-                                Login
-                            </Nav.Link>
+                            user ? <Button className='text-decoration-none text-dark' onClick={handleSignOut} variant='link'>Sing Out</Button>
+                                : <Nav.Link eventKey={2} as={Link} to="/login">
+                                    Login
+                                </Nav.Link>
                         }
                     </Nav>
                 </Navbar.Collapse>
