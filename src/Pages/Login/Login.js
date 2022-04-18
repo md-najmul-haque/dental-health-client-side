@@ -2,10 +2,15 @@ import React from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import auth from '../../firebase.init';
-import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
+import { useAuthState, useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
+import { useSignInWithGoogle } from 'react-firebase-hooks/auth';
+import './Login.css'
+
+
 
 
 const Login = () => {
+
     const [
         signInWithEmailAndPassword,
         user,
@@ -14,35 +19,53 @@ const Login = () => {
     ] = useSignInWithEmailAndPassword(auth);
 
 
-    const onSubmit = event => {
+    const handleSignIn = event => {
         event.preventDefault();
         const email = event.target.email.value;
         const password = event.target.password.value;
         signInWithEmailAndPassword(email, password)
     }
+    // const [user] = useAuthState(auth);
+
+    const [signInWithGoogle] = useSignInWithGoogle(auth);
+
+    const handleSignInWithGoogle = () => {
+
+        signInWithGoogle();
+    }
 
     return (
         <div className='w-50 mt-4 mx-auto'>
-            <h2> Please Login</h2>
-            <Form onSubmit='onSubmit'>
+            <h2 className='text-center'> Please Login</h2>
+
+            <div className="d-flex justify-content-center mt-2">
+                <Button onClick={handleSignInWithGoogle} variant="info" type='submit'>Google Sign In</Button>
+            </div>
+            <div className='d-flex justify-content-center align-items-center'>
+                <div className='blank-div'></div> <p className='px-2 mt-2'>or</p> <div className='blank-div'></div>
+            </div>
+            <Form onSubmit={handleSignIn}>
+
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Label>Email address</Form.Label>
-                    <Form.Control type="email" placeholder="Enter email" required />
+                    <Form.Control type="email" name='email' placeholder="Enter email" required />
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formBasicPassword">
                     <Form.Label>Password</Form.Label>
-                    <Form.Control type="password" placeholder="Password" required />
+                    <Form.Control type="password" name='password' placeholder="Password" required />
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="formBasicCheckbox">
                     <Form.Check type="checkbox" label="Check me out" />
                 </Form.Group>
 
-                <Button variant="primary" type="submit">
+
+                <Button variant="info" type="submit">
                     Login
                 </Button>
+
             </Form>
-            <p>New in Health Plus? Please <Link className='text-decoration-none my-2' to='/register'>Register</Link></p>
+            <p className='my-2 text-center'>New in Health Plus? Please <Link className='text-decoration-none' to='/register'>Register</Link></p>
 
         </div >
     );
