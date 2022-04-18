@@ -12,6 +12,7 @@ const Header = () => {
     const [user] = useAuthState(auth);
     const navigate = useNavigate();
 
+    // below function for sign out
 
     const handleSignOut = () => {
         signOut(auth);
@@ -28,6 +29,9 @@ const Header = () => {
                     <Nav className="me-auto">
                         <Nav.Link href="home#services">Services</Nav.Link>
                         <Nav.Link href="home#testimonials">Testimonials</Nav.Link>
+                        <Nav.Link eventKey={2} as={Link} to="/blogs">
+                            Blogs
+                        </Nav.Link>
                     </Nav>
                     <Nav>
                         <Nav.Link eventKey={2} as={Link} to="/about">About</Nav.Link>
