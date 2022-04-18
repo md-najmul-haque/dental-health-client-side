@@ -19,7 +19,7 @@ const Testimonials = () => {
     ]
 
     return (
-        <div>
+        <div id='testimonials'>
 
             {
                 testimonials.map(testimonial => <Testimonial key={testimonial.id} testimonial={testimonial} ></Testimonial>)
