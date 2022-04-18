@@ -49,12 +49,6 @@ const Login = () => {
         <div className='w-50 mt-4 mx-auto'>
             <h2 className='text-center'> Please Login</h2>
 
-            <div className="d-flex justify-content-center mt-2">
-                <Button onClick={handleSignInWithGoogle} variant="info" type='submit'>Google Sign In</Button>
-            </div>
-            <div className='d-flex justify-content-center align-items-center'>
-                <div className='blank-div'></div> <p className='px-2 mt-2'>or</p> <div className='blank-div'></div>
-            </div>
             <Form onSubmit={handleSignIn}>
 
                 <Form.Group className="mb-3" controlId="formBasicEmail">
@@ -74,8 +68,17 @@ const Login = () => {
                 <Button variant="info" type="submit">
                     Login
                 </Button>
-
             </Form>
+
+            <div className='d-flex justify-content-center align-items-center'>
+                <div className='blank-div'></div> <p className='px-2 mt-2'>or</p> <div className='blank-div'></div>
+            </div>
+
+            <div className="d-flex justify-content-center my-2">
+                <Button onClick={handleSignInWithGoogle} variant="info" type='submit'>Google Sign In</Button>
+            </div>
+
+
             <p className='my-2 text-center'>New in Health Plus? Please <Link className='text-decoration-none' to='/register'>Register</Link></p>
 
         </div >

@@ -33,11 +33,6 @@ const Register = () => {
         <div className='mt-3'>
             <h2 className='text-center'>Please Register</h2>
 
-            <div className="d-flex justify-content-center mt-3">
-                <Button onClick={handleSignInWithGoogle} variant="info" type='submit'>Google Sign In</Button>
-            </div>
-
-
             <Form onSubmit={handleRegistration} className='w-50 mx-auto'>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Label>Your Name</Form.Label>
@@ -60,7 +55,17 @@ const Register = () => {
                     Registration
                 </Button>
             </Form>
+            <div className='d-flex justify-content-center align-items-center'>
+                <div className='blank-div'></div> <p className='px-2 mt-2'>or</p> <div className='blank-div'></div>
+            </div>
+
+            <div className="d-flex justify-content-center my-2">
+                <Button onClick={handleSignInWithGoogle} variant="info" type='submit'>Google Sign In</Button>
+            </div>
+
             <p className='text-center'>Already registered? <Link to='/login' className='text-decoration-none'>Login</Link></p>
+
+
         </div>
     );
 };
