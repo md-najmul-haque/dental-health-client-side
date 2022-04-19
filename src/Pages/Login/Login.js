@@ -1,23 +1,25 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import auth from '../../firebase.init';
-import { useAuthState, useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
+import { useSendPasswordResetEmail, useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import { useSignInWithGoogle } from 'react-firebase-hooks/auth';
 import './Login.css'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import Loading from '../../Pages/Home/Loading/Loading'
 
 
-
-// const [user] = useAuthState(auth);
 
 const Login = () => {
-
-    // const [user] = useAuthState(auth);
-
+    const emailRef = useRef('');
     const navigate = useNavigate();
     const location = useLocation();
+    let errorElement;
 
     let from = location?.state?.from?.pathname || '/';
+
+    const [sendPasswordResetEmail, sending] = useSendPasswordResetEmail(auth);
 
     const [
         signInWithEmailAndPassword,
@@ -26,6 +28,19 @@ const Login = () => {
         error,
     ] = useSignInWithEmailAndPassword(auth);
 
+
+    const [signInWithGoogle] = useSignInWithGoogle(auth);
+
+
+    if (loading || sending) {
+        return <Loading></Loading>
+    }
+
+    if (error) {
+        errorElement = <p className='text-danger'>Error: {error?.message}</p>
+    }
+
+
     const handleSignIn = event => {
         event.preventDefault();
         const email = event.target.email.value;
@@ -33,16 +48,26 @@ const Login = () => {
         signInWithEmailAndPassword(email, password)
     }
 
-    const [signInWithGoogle] = useSignInWithGoogle(auth);
 
     const handleSignInWithGoogle = () => {
-
         signInWithGoogle();
     }
 
     if (user) {
         console.log('user')
         navigate(from, { replace: true })
+    }
+
+    const resetPassword = async () => {
+        const email = emailRef.current.value;
+        // const email = event.target.email.value;
+        if (email) {
+            await sendPasswordResetEmail(email);
+            toast('Sent email');
+        }
+        else {
+            toast('please enter your email address');
+        }
     }
 
     return (
@@ -70,6 +95,8 @@ const Login = () => {
                 </Button>
             </Form>
 
+            <p>{errorElement}</p>
+
             <div className='d-flex justify-content-center align-items-center'>
                 <div className='blank-div'></div> <p className='px-2 mt-2'>or</p> <div className='blank-div'></div>
             </div>
@@ -80,7 +107,8 @@ const Login = () => {
 
 
             <p className='my-2 text-center'>New in Health Plus? Please <Link className='text-decoration-none' to='/register'>Register</Link></p>
-
+            <p className='text-center'>Forget Password? <button className='btn btn-link text-primary pe-auto text-decoration-none' onClick={resetPassword}>Reset Password</button> </p>
+            <ToastContainer />
         </div >
     );
 };

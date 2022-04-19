@@ -20,7 +20,9 @@ const Testimonials = () => {
 
     return (
         <div id='testimonials'>
-
+            <h2 className="text-info text-center">
+                Testimonials
+            </h2>
             {
                 testimonials.map(testimonial => <Testimonial key={testimonial.id} testimonial={testimonial} ></Testimonial>)
             }
